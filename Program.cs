@@ -6,7 +6,8 @@ namespace DIO.Series
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Serie serie = new Serie();
+            Console.WriteLine("");
         }
     }
 }
