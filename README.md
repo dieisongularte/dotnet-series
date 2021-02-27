@@ -1,2 +1,2 @@
-## Criando uma aplicação de transferências bancárias com .NET
+## Criando um APP simples de cadastro de séries em .NET
 Projeto baseado no Bootcamp da DIO.
