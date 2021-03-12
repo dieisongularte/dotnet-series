@@ -1,16 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace DIO.Series
 {
-    public class Serie : EntidadeBase
+    class Filme : EntidadeBase
     {
-        public Serie(int id, Genero genero, string titulo, string descricao, int ano)
+        public Filme(int id, Genero genero, string titulo, string descricao, int ano, float nota)
         {
             Id = id;
             Genero = genero;
             Titulo = titulo;
             Descricao = descricao;
             Ano = ano;
+            Nota = nota;
             Excluido = false;
         }
 
@@ -20,7 +23,8 @@ namespace DIO.Series
             retorno += "Gênero: " + Genero + Environment.NewLine;
             retorno += "Título: " + Titulo + Environment.NewLine;
             retorno += "Descrição: " + Descricao + Environment.NewLine;
-            retorno += "Ano de Início : " + Ano + Environment.NewLine;
+            retorno += "Ano de Início: " + Ano + Environment.NewLine;
+            retorno += "Nota: " + Nota + Environment.NewLine;
             retorno += "Excluido: " + Excluido;
             return retorno;
         }
