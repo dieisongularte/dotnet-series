@@ -52,8 +52,7 @@ namespace DIO.Series
 
             foreach (var serie in lista)
             {
-                var excluido = serie.RetornaExcluido();
-                Console.WriteLine("#ID {0}: - {1} - {2}", serie.RetornaId(), serie.RetornaTitulo(), (excluido ? "*Excluído*" : ""));
+                Console.WriteLine(serie.InfoAbrev());
             }
         }
 
