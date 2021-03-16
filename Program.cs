@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Globalization;
 
 namespace DIO.Series
 {
     class Program
     {
-        static SerieRepositorio repositorio = new SerieRepositorio();
+        static EntidadeBaseRepositorio baseRepositorio = new EntidadeBaseRepositorio();
         static void Main(string[] args)
         {
             string opcaoUsuario = Tela.ObterOpcaoUsuario();
@@ -40,26 +41,34 @@ namespace DIO.Series
 
         private static void ListarSerie()
         {
-            Console.WriteLine("Listar séries");
+            Console.WriteLine("Listar");
             Console.WriteLine("-----------------");
 
-            var lista = repositorio.Lista();
+            var lista = baseRepositorio.Lista();
 
             if (lista.Count == 0)
             {
-                Console.WriteLine("Nenhuma série cadastrada");
+                Console.WriteLine("Nenhuma série/filme cadastrada");
             }
 
-            foreach (var serie in lista)
+            foreach (var item in lista)
             {
-                Console.WriteLine(serie.InfoAbrev());
+                Console.WriteLine(item.InfoAbrev());
             }
         }
 
         private static void InserirSerie()
         {
-            Console.WriteLine("Inserir nova Série");
+            Console.WriteLine("Inserir");
             Console.WriteLine("-------------");
+
+            foreach (int j in Enum.GetValues(typeof(Tipo)))
+            {
+                Console.WriteLine("{0}-{1}", j, Enum.GetName(typeof(Tipo), j));
+            }
+
+            Console.Write("Digite o tipo entre as opções acima: ");
+            int entradaTipo = int.Parse(Console.ReadLine());
 
             foreach (int i in Enum.GetValues(typeof(Genero)))
             {
@@ -69,27 +78,53 @@ namespace DIO.Series
             Console.Write("Digite o genêro entre as opções acima: ");
             int entradaGenero = int.Parse(Console.ReadLine());
             
-            Console.Write("Digite o Título da Série: ");
+            Console.Write("Digite o Título: ");
             string entradaTitulo = Console.ReadLine();
 
-            Console.Write("Digite o Ano de Início da Série: ");
+            Console.Write("Digite o Ano de Início: ");
             int entradaAno = int.Parse(Console.ReadLine());
 
-            Console.Write("Digite a Descrição da Série: ");
+            Console.Write("Digite a Descrição: ");
             string entradaDescricao = Console.ReadLine();
 
-            Serie serie = new Serie(id: repositorio.ProximoId(), 
-                                    genero: (Genero) entradaGenero, 
-                                    titulo: entradaTitulo, 
-                                    descricao: entradaDescricao, 
-                                    ano: entradaAno);
-            repositorio.Insere(serie);
+            if (entradaTipo == 1)
+            {
+                Console.Write("Digite a nota: ");
+                float entradaNota = float.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+
+                Filme filme = new Filme(id: baseRepositorio.ProximoId(),
+                                        tipo: (Tipo)entradaTipo,
+                                        genero: (Genero)entradaGenero, 
+                                        titulo: entradaTitulo,
+                                        descricao: entradaDescricao,
+                                        ano: entradaAno,
+                                        nota: entradaNota);
+                baseRepositorio.Insere(filme);
+            }
+            else
+            {
+                Serie serie = new Serie(id: baseRepositorio.ProximoId(),
+                                        tipo: (Tipo) entradaTipo,
+                                        genero: (Genero)entradaGenero,
+                                        titulo: entradaTitulo,
+                                        descricao: entradaDescricao,
+                                        ano: entradaAno);
+                baseRepositorio.Insere(serie);
+            }
         }
 
         private static void AtualizarSerie()
         {
             Console.Write("Digite o Id da Série: ");
             int idSerie = int.Parse(Console.ReadLine());
+
+            foreach (int j in Enum.GetValues(typeof(Tipo)))
+            {
+                Console.WriteLine("{0}-{1}", j, Enum.GetName(typeof(Tipo), j));
+            }
+
+            Console.Write("Digite o tipo entre as opções acima: ");
+            int entradaTipo = int.Parse(Console.ReadLine());
 
             foreach (int i in Enum.GetValues(typeof(Genero)))
             {
@@ -108,12 +143,30 @@ namespace DIO.Series
             Console.Write("Digite a Descrição da Série: ");
             string entradaDescricao = Console.ReadLine();
 
-            Serie serie = new Serie(id: idSerie,
-                                    genero: (Genero)entradaGenero,
-                                    titulo: entradaTitulo,
-                                    descricao: entradaDescricao,
-                                    ano: entradaAno);
-            repositorio.Atualiza(idSerie, serie);
+            if (entradaTipo == 1)
+            {
+                Console.Write("Digite a nota: ");
+                float entradaNota = float.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+
+                Filme filme = new Filme(id: idSerie,
+                                        tipo: (Tipo)entradaTipo,
+                                        genero: (Genero)entradaGenero,
+                                        titulo: entradaTitulo,
+                                        descricao: entradaDescricao,
+                                        ano: entradaAno,
+                                        nota: entradaNota);
+                baseRepositorio.Atualiza(idSerie, filme);
+            }
+            else
+            {
+                Serie serie = new Serie(id: idSerie,
+                                        tipo: (Tipo)entradaTipo,
+                                        genero: (Genero)entradaGenero,
+                                        titulo: entradaTitulo,
+                                        descricao: entradaDescricao,
+                                        ano: entradaAno);
+                baseRepositorio.Atualiza(idSerie, serie);
+            }
         }
 
         private static void ExcluirSerie()
@@ -126,7 +179,7 @@ namespace DIO.Series
 
             bool confirmaExclusao = Tela.DesejaExcluir();
 
-            if(confirmaExclusao) repositorio.Exclui(idSerie);
+            if(confirmaExclusao) baseRepositorio.Exclui(idSerie);
         }
 
         private static void VisualizarSerie()
@@ -137,8 +190,8 @@ namespace DIO.Series
             Console.Write("Digite o Id da Série: ");
             int idSerie = int.Parse(Console.ReadLine());
 
-            Serie serie = repositorio.RetornaPorId(idSerie);
-            Console.WriteLine(serie);
+            EntidadeBase entidadeBase = baseRepositorio.RetornaPorId(idSerie);
+            Console.WriteLine(entidadeBase);
         }
     }
 }
