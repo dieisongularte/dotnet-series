@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,28 +7,10 @@ namespace DIO.Series
 {
     public static class Tela
     {
-        public static int FilmeOrSerie()
-        {
-            Console.WriteLine("DIO Séries/Filmes a seu dispor.");
-            Console.WriteLine("Escolha o sistema abaixo");
-            Console.Write("1-Filme ## 2-Serie: ");
-            int opcao = int.Parse(Console.ReadLine());
-            if (opcao != 1 && opcao != 2)
-            {
-                while (opcao != 1 && opcao != 2)
-                {
-                    Console.Beep();
-                    Console.WriteLine("Opção Inválida");
-                    Console.Write("1-Filme ## 2-Serie: ");
-                    opcao = int.Parse(Console.ReadLine());
-                }
-            }
-            return opcao;
-        }
-
         public static string ObterOpcaoUsuario()
         {
             Console.WriteLine("");
+            Console.WriteLine("DIO Séries/Filmes a seu dispor.");
             Console.WriteLine("Informe a opção desejada:");
 
             Console.WriteLine("1 - Listar");
@@ -42,6 +25,60 @@ namespace DIO.Series
             string opcaoUsuario = Console.ReadLine().ToUpper();
             Console.WriteLine();
             return opcaoUsuario;
+        }
+
+        public static int GetId()
+        {
+            Console.Write("Digite o Id da Série ou Filme: ");
+            int id = int.Parse(Console.ReadLine());
+            return id;
+        }
+
+        public static int GetTipo()
+        {
+            foreach (int j in Enum.GetValues(typeof(Tipo)))
+            {
+                Console.WriteLine("{0}-{1}", j, Enum.GetName(typeof(Tipo), j));
+            }
+
+            Console.Write("Digite o tipo entre as opções acima: ");
+            return int.Parse(Console.ReadLine());
+        }
+
+        public static int GetGenero()
+        {
+            Console.WriteLine();
+            foreach (int i in Enum.GetValues(typeof(Genero)))
+            {
+                Console.WriteLine("{0}-{1}", i, Enum.GetName(typeof(Genero), i));
+            }
+
+            Console.Write("Digite o genêro entre as opções acima: ");
+            return int.Parse(Console.ReadLine());
+        }
+
+        public static string GetTitulo()
+        {
+            Console.Write("Digite o Título: ");
+            return Console.ReadLine();
+        }
+
+        public static string GetDescricao()
+        {
+            Console.Write("Digite a Descrição: ");
+            return Console.ReadLine();
+        }
+
+        public static int GetAno()
+        {
+            Console.Write("Digite o Ano de Início: ");
+            return int.Parse(Console.ReadLine());
+        }
+
+        public static float GetNota()
+        {
+            Console.Write("Digite a nota: ");
+            return float.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
         }
 
         public static bool DesejaExcluir()

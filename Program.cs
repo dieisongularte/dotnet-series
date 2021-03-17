@@ -15,19 +15,19 @@ namespace DIO.Series
                 switch (opcaoUsuario)
                 {
                     case "1":
-                        ListarSerie();
+                        Listar();
                         break;
                     case "2":
-                        InserirSerie();
+                        Inserir();
                         break;
                     case "3":
-                        AtualizarSerie();
+                        Atualizar();
                         break;
                     case "4":
-                        ExcluirSerie();
+                        Excluir();
                         break;
                     case "5":
-                        VisualizarSerie();
+                        Visualizar();
                         break;
                     case "C":
                         Console.Clear();
@@ -39,7 +39,7 @@ namespace DIO.Series
             }
         }
 
-        private static void ListarSerie()
+        private static void Listar()
         {
             Console.WriteLine("Listar");
             Console.WriteLine("-----------------");
@@ -57,40 +57,20 @@ namespace DIO.Series
             }
         }
 
-        private static void InserirSerie()
+        private static void Inserir()
         {
             Console.WriteLine("Inserir");
             Console.WriteLine("-------------");
 
-            foreach (int j in Enum.GetValues(typeof(Tipo)))
-            {
-                Console.WriteLine("{0}-{1}", j, Enum.GetName(typeof(Tipo), j));
-            }
-
-            Console.Write("Digite o tipo entre as opções acima: ");
-            int entradaTipo = int.Parse(Console.ReadLine());
-
-            foreach (int i in Enum.GetValues(typeof(Genero)))
-            {
-                Console.WriteLine("{0}-{1}", i, Enum.GetName(typeof(Genero), i));
-            }
-
-            Console.Write("Digite o genêro entre as opções acima: ");
-            int entradaGenero = int.Parse(Console.ReadLine());
-            
-            Console.Write("Digite o Título: ");
-            string entradaTitulo = Console.ReadLine();
-
-            Console.Write("Digite o Ano de Início: ");
-            int entradaAno = int.Parse(Console.ReadLine());
-
-            Console.Write("Digite a Descrição: ");
-            string entradaDescricao = Console.ReadLine();
+            int entradaTipo = Tela.GetTipo();
+            int entradaGenero = Tela.GetGenero();
+            string entradaTitulo = Tela.GetTitulo();
+            int entradaAno = Tela.GetAno();
+            string entradaDescricao = Tela.GetDescricao();
 
             if (entradaTipo == 1)
             {
-                Console.Write("Digite a nota: ");
-                float entradaNota = float.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                float entradaNota = Tela.GetNota();
 
                 Filme filme = new Filme(id: baseRepositorio.ProximoId(),
                                         tipo: (Tipo)entradaTipo,
@@ -113,84 +93,58 @@ namespace DIO.Series
             }
         }
 
-        private static void AtualizarSerie()
+        private static void Atualizar()
         {
-            Console.Write("Digite o Id da Série: ");
-            int idSerie = int.Parse(Console.ReadLine());
-
-            foreach (int j in Enum.GetValues(typeof(Tipo)))
-            {
-                Console.WriteLine("{0}-{1}", j, Enum.GetName(typeof(Tipo), j));
-            }
-
-            Console.Write("Digite o tipo entre as opções acima: ");
-            int entradaTipo = int.Parse(Console.ReadLine());
-
-            foreach (int i in Enum.GetValues(typeof(Genero)))
-            {
-                Console.WriteLine("{0}-{1}", i, Enum.GetName(typeof(Genero), i));
-            }
-
-            Console.Write("Digite o genêro entre as opções acima: ");
-            int entradaGenero = int.Parse(Console.ReadLine());
-
-            Console.Write("Digite o Título da Série: ");
-            string entradaTitulo = Console.ReadLine();
-
-            Console.Write("Digite o Ano de Início da Série: ");
-            int entradaAno = int.Parse(Console.ReadLine());
-
-            Console.Write("Digite a Descrição da Série: ");
-            string entradaDescricao = Console.ReadLine();
+            int id = Tela.GetId();
+            int entradaTipo = Tela.GetTipo();
+            int entradaGenero = Tela.GetGenero();
+            string entradaTitulo = Tela.GetTitulo();
+            int entradaAno = Tela.GetAno();
+            string entradaDescricao = Tela.GetDescricao();
 
             if (entradaTipo == 1)
             {
-                Console.Write("Digite a nota: ");
-                float entradaNota = float.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                float entradaNota = Tela.GetNota();
 
-                Filme filme = new Filme(id: idSerie,
+                Filme filme = new Filme(id: id,
                                         tipo: (Tipo)entradaTipo,
                                         genero: (Genero)entradaGenero,
                                         titulo: entradaTitulo,
                                         descricao: entradaDescricao,
                                         ano: entradaAno,
                                         nota: entradaNota);
-                baseRepositorio.Atualiza(idSerie, filme);
+                baseRepositorio.Atualiza(id, filme);
             }
             else
             {
-                Serie serie = new Serie(id: idSerie,
+                Serie serie = new Serie(id: id,
                                         tipo: (Tipo)entradaTipo,
                                         genero: (Genero)entradaGenero,
                                         titulo: entradaTitulo,
                                         descricao: entradaDescricao,
                                         ano: entradaAno);
-                baseRepositorio.Atualiza(idSerie, serie);
+                baseRepositorio.Atualiza(id, serie);
             }
         }
 
-        private static void ExcluirSerie()
+        private static void Excluir()
         {
-            Console.WriteLine("Excluir Série");
+            Console.WriteLine("Excluir");
             Console.WriteLine("-------------");
 
-            Console.Write("Digite o Id da Série: ");
-            int idSerie = int.Parse(Console.ReadLine());
-
+            int id = Tela.GetId();
             bool confirmaExclusao = Tela.DesejaExcluir();
-
-            if(confirmaExclusao) baseRepositorio.Exclui(idSerie);
+            if(confirmaExclusao) baseRepositorio.Exclui(id);
         }
 
-        private static void VisualizarSerie()
+        private static void Visualizar()
         {
-            Console.WriteLine("Visualizar Série");
+            Console.WriteLine("Visualizar");
             Console.WriteLine("-------------");
 
-            Console.Write("Digite o Id da Série: ");
-            int idSerie = int.Parse(Console.ReadLine());
-
-            EntidadeBase entidadeBase = baseRepositorio.RetornaPorId(idSerie);
+            int id = Tela.GetId();
+            EntidadeBase entidadeBase = baseRepositorio.RetornaPorId(id);
+            Console.WriteLine("-------------");
             Console.WriteLine(entidadeBase);
         }
     }

@@ -43,7 +43,7 @@ namespace DIO.Series
             retorno += "Descrição: " + Descricao + Environment.NewLine;
             retorno += "Ano de Início : " + Ano + Environment.NewLine;
             retorno += "Tipo: " + Tipo + Environment.NewLine;
-            retorno += "Excluido: " + Excluido + Environment.NewLine;
+            retorno += "Excluido: " + (Excluido ? "Sim" : "Não") + Environment.NewLine;
             return retorno;
         }
     }
