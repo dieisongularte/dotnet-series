@@ -7,10 +7,15 @@ namespace DIO.Series
 {
     public static class Tela
     {
+        public static string Linha()
+        {
+            return "=============================";
+        }
         public static string ObterOpcaoUsuario()
         {
             Console.WriteLine("");
             Console.WriteLine("DIO Séries/Filmes a seu dispor.");
+            Console.WriteLine(Linha());
             Console.WriteLine("Informe a opção desejada:");
 
             Console.WriteLine("1 - Listar");

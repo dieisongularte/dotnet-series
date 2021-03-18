@@ -42,7 +42,7 @@ namespace DIO.Series
         private static void Listar()
         {
             Console.WriteLine("Listar");
-            Console.WriteLine("-----------------");
+            Console.WriteLine(Tela.Linha());
 
             var lista = baseRepositorio.Lista();
 
@@ -60,7 +60,7 @@ namespace DIO.Series
         private static void Inserir()
         {
             Console.WriteLine("Inserir");
-            Console.WriteLine("-------------");
+            Console.WriteLine(Tela.Linha());
 
             int entradaTipo = Tela.GetTipo();
             int entradaGenero = Tela.GetGenero();
@@ -95,6 +95,9 @@ namespace DIO.Series
 
         private static void Atualizar()
         {
+            Console.WriteLine("Atualizar");
+            Console.WriteLine(Tela.Linha());
+
             int id = Tela.GetId();
             int entradaTipo = Tela.GetTipo();
             int entradaGenero = Tela.GetGenero();
@@ -130,7 +133,7 @@ namespace DIO.Series
         private static void Excluir()
         {
             Console.WriteLine("Excluir");
-            Console.WriteLine("-------------");
+            Console.WriteLine(Tela.Linha());
 
             int id = Tela.GetId();
             bool confirmaExclusao = Tela.DesejaExcluir();
@@ -140,11 +143,11 @@ namespace DIO.Series
         private static void Visualizar()
         {
             Console.WriteLine("Visualizar");
-            Console.WriteLine("-------------");
+            Console.WriteLine(Tela.Linha());
 
             int id = Tela.GetId();
             EntidadeBase entidadeBase = baseRepositorio.RetornaPorId(id);
-            Console.WriteLine("-------------");
+            Console.WriteLine(Tela.Linha());
             Console.WriteLine(entidadeBase);
         }
     }

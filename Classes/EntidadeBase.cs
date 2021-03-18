@@ -27,7 +27,7 @@ namespace DIO.Series
 
         public string InfoAbrev()
         {
-            return $"#ID {Id}: {Titulo} {(Excluido ? "- *Excluído*" : "")}";
+            return $"* {Id} -=- {Titulo} -=- {Tipo}{(Excluido ? " -=- *Excluído*" : "")}";
         }
 
         public void Excluir()
